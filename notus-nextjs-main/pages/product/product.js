@@ -2,6 +2,7 @@
 import React from "react";
 
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
+import { useState } from "react";
 import Footer from "components/Footers/Footer.js";
 
 export default function Product() {
@@ -328,17 +329,46 @@ export default function Product() {
             image: "/img/imageProduct.png"
           }
       ];
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(data);
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = data.filter((product) =>
+      product.name.toLowerCase().includes(query)
+    );
+    setFilteredProducts(filtered);
+  };
     
   return (
     <>
       <IndexNavbar fixed />
       <section>
       <div className="min-h-screen bg-gray-100 py-10">
-      <div className=" mx-auto mt-20 px-4">
+      <div className="w-full mx-autp items-center flex justify-between md:flex-nowrap mt-20 flex-wrap md:px-10 px-4">
+          <form className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
+            <div className="relative flex w-full flex-wrap items-stretch">
+              <span className="z-10 h-full leading-snug font-normal text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                <i className="fas fa-search"></i>
+              </span>
+              <input
+                type="text"
+                placeholder="Search by Name..."
+                value={searchQuery}
+                onChange={handleSearch}
+                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+              />
+            </div>
+          </form>
+        </div>
+      {filteredProducts.length > 0 ? (<div className=" mx-auto mt-10 px-4">
         {/* Grid Container */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Loop through cards */}
-          {data.map((data) => (
+          {
+          filteredProducts.map((data) => (
            <div className="flex flex-col min-w-0 break-words bg-grenPrimary-500 w-full mb-6 shadow-lg rounded-lg">
            <img
              alt="..."
@@ -355,9 +385,14 @@ export default function Product() {
              </p>
            </blockquote>
          </div>
-          ))}
+          ))
+        }
         </div>
-      </div>
+      </div>  ) : (
+       <div className="flex items-center justify-center w-full h-screen">
+       <p className="text-gray-800 text-lg">No products found.</p>
+     </div>
+          )}
     </div>
       </section>
     </>

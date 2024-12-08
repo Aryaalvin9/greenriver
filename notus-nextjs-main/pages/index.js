@@ -71,11 +71,13 @@ export default function Index() {
           <div className="flex flex-wrap items-center">
             <div className="w-20 md:w-6/12 lg:w-4/12 px-12 md:px-4 mr-auto ml-auto -mt-32">
               <div className="relative flex flex-col min-w-0 break-words bg-grenPrimary-500 w-full mb-6 shadow-lg rounded-lg">
+                <div className="flex bg-white pl-4 pt-4 pr-4 rounded-t-lg">
                 <img
                   alt="..."
-                  src="/img/reef.jpeg"
-                  className="w-full align-middle rounded-t-lg"
+                  src="/img/image_product.png"
+                  className="w-full align-middle  rounded-t-lg"
                 />
+                </div>
                 <blockquote className="relative p-8 mb-4">
                  
                   <h4 className="text-xl font-bold text-yelowPrimary-500">
@@ -98,11 +100,10 @@ export default function Index() {
                       </svg>
                       </div>
                       <h6 className="text-xl mb-1 font-semibold text-grenPrimary-500">
-                        PERSONAL CARE
+                         GENERAL CHEMICAL
                       </h6>
                       <p className="mb-4 text-blueGray-500">
-                      Our gentle, eco-conscious ingredients for personal care products promote
-                      health and well-being without compromising safety or the environment.
+                        We are dedicated to providing high-quality general chemical commodities that support the transition to green energy and sustainable solutions. With a focus on eco-friendly production processes. By integrating innovation with sustainability, we aim to drive progress toward a greener, more sustainable future for all
                       </p>
                     </div>
                   </div>
@@ -153,10 +154,11 @@ export default function Index() {
                       </svg>
                       </div>
                       <h6 className="text-xl mb-1 font-semibold text-redPrimary-500">
-                      GENERAL CHEMICAL
+                        PERSONAL CARE
                       </h6>
                       <p className="mb-4 text-blueGray-500">
-                        We are dedicated to providing high-quality general chemical commodities that support the transition to green energy and sustainable solutions. With a focus on eco-friendly production processes. By integrating innovation with sustainability, we aim to drive progress toward a greener, more sustainable future for all
+                        Our gentle, eco-conscious ingredients for personal care products promote
+                        health and well-being without compromising safety or the environment.
                       </p>
                     </div>
                   </div>
@@ -168,7 +170,9 @@ export default function Index() {
                         <path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87z"/>
                       </svg>
                       </div>
-                      <h6 className="text-xl mb-1 font-semibold text-redPrimary-500">WATER TREATMENT</h6>
+                      <h6 className="text-xl mb-1 font-semibold text-grenPrimary-500">
+                        WATER TREATMENT
+                      </h6>
                       <p className="mb-4 text-blueGray-500">
                       From advanced agricultural chemicals that promote sustainable farming
                       practices to eco-conscious industrial solutions, our products are designed to
@@ -184,7 +188,7 @@ export default function Index() {
                         <path d="M13.5 0a.5.5 0 0 0 0 1H15v2.75h-.5a.5.5 0 0 0 0 1h.5V7.5h-1.5a.5.5 0 0 0 0 1H15v2.75h-.5a.5.5 0 0 0 0 1h.5V15h-1.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 .5-.5V.5a.5.5 0 0 0-.5-.5zM7 1.5l.364-.343a.5.5 0 0 0-.728 0l-.002.002-.006.007-.022.023-.08.088a29 29 0 0 0-1.274 1.517c-.769.983-1.714 2.325-2.385 3.727C2.368 7.564 2 8.682 2 9.733 2 12.614 4.212 15 7 15s5-2.386 5-5.267c0-1.05-.368-2.169-.867-3.212-.671-1.402-1.616-2.744-2.385-3.727a29 29 0 0 0-1.354-1.605l-.022-.023-.006-.007-.002-.001zm0 0-.364-.343zm-.016.766L7 2.247l.016.019c.24.274.572.667.944 1.144.611.781 1.32 1.776 1.901 2.827H4.14c.58-1.051 1.29-2.046 1.9-2.827.373-.477.706-.87.945-1.144zM3 9.733c0-.755.244-1.612.638-2.496h6.724c.395.884.638 1.741.638 2.496C11 12.117 9.182 14 7 14s-4-1.883-4-4.267"/>
                       </svg>
                       </div>
-                      <h6 className="text-xl mb-1 font-semibold text-grenPrimary-500">
+                      <h6 className="text-xl mb-1 font-semibold text-redPrimary-500">
                         WASTEWATER TREATMENT
                       </h6>
                       <p className="mb-4 text-blueGray-500">
@@ -265,40 +269,34 @@ export default function Index() {
           <div className="justify-center flex flex-wrap">
             <div className="w-full lg:w-12/12 px-4  -mt-24">
               <div className="flex flex-wrap">
-                <div className="w-full lg:w-4/12 px-4">
-                  <Link href="/auth/login">
+                <div className="w-full lg:w-4/12 px-4"> 
                     <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                       <img
                         alt="..."
                         className="align-middle border-none max-w-full h-auto rounded-lg"
-                        src="/img/login.jpg"
+                        src="/img/image1.jpg"
                       />
                     </div>
-                  </Link>
                 </div>
 
                 <div className="w-full lg:w-4/12 px-4">
-                  <Link href="/profile">
                     <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                       <img
                         alt="..."
                         className="align-middle border-none max-w-full h-auto rounded-lg"
-                        src="/img/profile.jpg"
+                        src="/img/image2.jpg"
                       />
                     </div>
-                  </Link>
                 </div>
 
                 <div className="w-full lg:w-4/12 px-4">
-                  <Link href="/landing">
                     <div className="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
                       <img
                         alt="..."
                         className="align-middle border-none max-w-full h-auto rounded-lg"
-                        src="/img/landing.jpg"
+                        src="/img/image3.jpg"
                       />
                     </div>
-                  </Link>
                 </div>
               </div>
             </div>
