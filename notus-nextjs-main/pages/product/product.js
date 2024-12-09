@@ -348,7 +348,7 @@ export default function Product() {
       <section>
       <div className="min-h-screen bg-gray-100 py-10">
       <div className="w-full mx-autp items-center flex justify-between md:flex-nowrap mt-20 flex-wrap md:px-10 px-4">
-          <form className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
+          <form className="md:flex flex-row flex-wrap items-center lg:ml-auto mr-3">
             <div className="relative flex w-full flex-wrap items-stretch">
               <span className="z-10 h-full leading-snug font-normal text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
                 <i className="fas fa-search"></i>
