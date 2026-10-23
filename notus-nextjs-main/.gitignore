@@ -26,3 +26,7 @@ yarn-error.log*
 out/
 
 commit.sh
+
+# local runtime data (replace with a persistent database in production)
+/data/runtime/
+/public/uploads/products/

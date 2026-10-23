@@ -5,9 +5,12 @@ import Head from "next/head";
 import Router from "next/router";
 
 import PageChange from "components/PageChange/PageChange.js";
+import VisitorTracker from "components/Analytics/VisitorTracker.js";
+import MotionController from "components/Animations/MotionController.js";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "styles/tailwind.css";
+import "styles/modern.css";
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
@@ -47,6 +50,8 @@ export default class MyApp extends App {
 
     return (
       <React.Fragment>
+        <VisitorTracker />
+        <MotionController />
         <Head>
           <meta
             name="viewport"

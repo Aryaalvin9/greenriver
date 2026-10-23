@@ -1,197 +1,90 @@
-import React from "react";
-
-// layout for page
-
-import Auth from "layouts/Auth.js";
-import { useState } from "react";
+import React, { useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
+
+import IndexNavbar from "components/Navbars/IndexNavbar.js";
+import Footer from "components/Footers/Footer.js";
+
+const initialForm = { name: "", email: "", phone: "", message: "", company: "" };
 
 export default function Contact() {
-  const router = useRouter(); // Untuk redirect
-  const showSuccess = () => {
-    toast.success("Thank you! Your submission was successful.", {
-      autoClose: 3000,
-    });
-  };
+  const router = useRouter();
+  const [formData, setFormData] = useState(initialForm);
+  const [submitting, setSubmitting] = useState(false);
 
-  const showError = () => {
-    toast.error("Oops! Something went wrong. Please try again later.", {
-      autoClose: 3000,
-    });
-  };
+  const handleChange = (event) => setFormData({ ...formData, [event.target.name]: event.target.value });
 
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-    commpany: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const sendEmail = async (e) => {
-    e.preventDefault();
-
-    const emailText = `
-    Nama: ${formData.name}\n
-    email: ${formData.email}\n
-    Nomor Telepon: ${formData.phone}\n
-    Pesan: ${formData.message}\n
-    commpany: ${formData.commpany}\n
-    `;
-
+  const sendEmail = async (event) => {
+    event.preventDefault();
+    setSubmitting(true);
     try {
-      const response = await fetch("/api/sendEmail", {
+      const response = await fetch("/api/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: "commercial@greenriverindonesia.com", // Ganti dengan email tujuan
-          subject: "Contact Permission",
-          text: emailText, // Gabungan inputan
-        }),
+        body: JSON.stringify(formData),
       });
-
-      if (response.ok) { 
-        showSuccess();
-        const timer = setTimeout( () => {
-          router.push("/");
-        }, 3000);
-        return () => clearTimeout(timer); 
-      } else {
-        const error = await response.json();
-        showError();
-      }
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Unable to send inquiry");
+      toast.success("Thank you. Your inquiry has been sent.", { autoClose: 3000 });
+      setFormData(initialForm);
+      if (data.whatsappUrl) window.open(data.whatsappUrl, "_blank", "noopener,noreferrer");
+      window.setTimeout(() => router.push("/"), 3000);
     } catch (error) {
-      console.error("Error: ", error);
-      alert("Terjadi kesalahan saat mengirim email.");
+      console.error("Error sending contact form:", error);
+      toast.error("We could not send your inquiry. Please try again.", { autoClose: 4000 });
+    } finally {
+      setSubmitting(false);
     }
   };
+
   return (
     <>
-      <div className="container mx-auto px-4 h-full">
-        <div className="flex content-center items-center justify-center h-full">
-          <div className="w-full lg:w-6/12 px-4">
-            <div className="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-blueGray-200 border-0">
-              <div className="rounded-t mb-0 px-6 py-6">
-                <div className="text-center mb-3">
-                  <h6 className="text-blueGray-500 text-sm font-bold">
-                    Contact Us
-                  </h6>
-                </div>
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
+      <Head>
+        <title>Contact Us | PT Green River Indonesia</title>
+        <meta name="description" content="Contact the PT Green River Indonesia commercial team for product and sourcing inquiries." />
+      </Head>
+      <IndexNavbar />
+      <main className="contact-modern">
+        <div className="modern-shell contact-grid">
+          <section className="contact-copy">
+            <span className="eyebrow">Start a conversation</span>
+            <h1>How can we support your business?</h1>
+            <p>Share your requirements, application or product inquiry. Our commercial team will review the details and get back to you.</p>
+            <div className="contact-details">
+              <div className="contact-detail">
+                <i className="fas fa-envelope" aria-hidden="true" />
+                <div><strong>Email</strong><a href="mailto:commercial@greenriverindonesia.com">commercial@greenriverindonesia.com</a></div>
               </div>
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form onSubmit={sendEmail}>
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Name"
-                      required
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Email"
-                      required
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Phone
-                    </label>
-                    <input
-                      type="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Phone"
-                      required
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      type="text-area"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Message"
-                      required
-                    />
-                  </div>
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Commpany
-                    </label>
-                    <input
-                      type="text"
-                      name="commpany"
-                      value={formData.commpany}
-                      onChange={handleChange}
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Commpany"
-                    />
-                  </div>
-                  <div className="text-center mt-6">
-                    <button
-                      className="bg-grenPrimary-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="submit"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
+              <div className="contact-detail">
+                <i className="fas fa-location-dot" aria-hidden="true" />
+                <div><strong>Office</strong><a href="https://maps.app.goo.gl/BU4iUyem7rxo744G6" target="_blank" rel="noreferrer">Jl. Daan Mogot KM 19, Tangerang, Banten</a></div>
+              </div>
+              <div className="contact-detail">
+                <i className="fas fa-clock" aria-hidden="true" />
+                <div><strong>Response</strong><span>Our team will respond as soon as possible during business hours.</span></div>
               </div>
             </div>
-          </div>
+          </section>
+
+          <section className="contact-card">
+            <div className="contact-card-head"><h2>Send an inquiry</h2><p>Complete the form below and we&apos;ll take it from there.</p></div>
+            <form onSubmit={sendEmail}>
+              <div className="contact-form-grid">
+                <div className="field"><label htmlFor="name">Full name</label><input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Your name" required /></div>
+                <div className="field"><label htmlFor="company">Company</label><input id="company" name="company" value={formData.company} onChange={handleChange} placeholder="Company name" /></div>
+                <div className="field"><label htmlFor="email">Email address</label><input id="email" type="email" name="email" value={formData.email} onChange={handleChange} placeholder="name@company.com" required /></div>
+                <div className="field"><label htmlFor="phone">Phone number</label><input id="phone" type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="+62" required /></div>
+                <div className="field full"><label htmlFor="message">How can we help?</label><textarea id="message" name="message" value={formData.message} onChange={handleChange} placeholder="Tell us about the product, quantity or application you need..." required /></div>
+              </div>
+              <button className="submit-button" type="submit" disabled={submitting}>{submitting ? "Sending inquiry..." : "Send inquiry"}</button>
+            </form>
+          </section>
         </div>
-      </div>
-      <ToastContainer /> 
+      </main>
+      <Footer />
+      <ToastContainer position="bottom-right" />
     </>
   );
 }
-
-Contact.layout = Auth;
